@@ -40,7 +40,7 @@ export default function Companies() {
               <li key={c.id} className="lrow">
                 <div>
                   <div className="lrow__name">{c.name}</div>
-                  <div className="lrow__sub">{c.website || 'no website'} · {c.applications_count} applications</div>
+                  <div className="lrow__sub">{c.website || 'no website'} | {c.applications_count} applications</div>
                 </div>
                 <button className="xdel" onClick={() => remove(c.id)}>×</button>
               </li>
