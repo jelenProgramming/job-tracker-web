@@ -150,3 +150,15 @@ body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Inter'
   .filterbar { flex-wrap: wrap; }
   .filterbar__search { flex-basis: 100%; }
 }
+
+/* soft-gradient depth, premium light saas */
+body { background: radial-gradient(720px 420px at 100% -8%, rgba(99, 102, 241, 0.09), transparent 60%), radial-gradient(680px 420px at -5% 6%, rgba(59, 91, 219, 0.06), transparent 60%), var(--bg); }
+.topbar { background: rgba(255, 255, 255, 0.82); backdrop-filter: blur(10px); }
+.card, .panel { box-shadow: 0 10px 30px rgba(20, 22, 29, 0.06); }
+.auth__card { box-shadow: 0 24px 60px rgba(47, 72, 184, 0.15); }
+.topbar__mark, .auth__mark { background: linear-gradient(135deg, #4f46e5, #3b5bdb); box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35); }
+.btn--primary, .auth__btn { background: linear-gradient(135deg, #4f46e5, #3b5bdb); border-color: transparent; box-shadow: 0 8px 20px rgba(79, 70, 229, 0.26); }
+.btn--primary:hover:not(:disabled), .auth__btn:hover:not(:disabled) { background: linear-gradient(135deg, #4338ca, #2f48b8); }
+.funnel__cell { box-shadow: 0 8px 20px rgba(20, 22, 29, 0.1); position: relative; overflow: hidden; }
+.funnel__cell::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent 45%); pointer-events: none; }
+.appcard--on { box-shadow: 0 10px 26px rgba(59, 91, 219, 0.2); }
