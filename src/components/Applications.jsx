@@ -52,7 +52,7 @@ export default function Applications() {
       <Funnel stats={stats} />
 
       <div className="filterbar">
-        <input className="field filterbar__search" placeholder="Search position or company…" value={filters.search} onChange={set('search')} />
+        <input className="field filterbar__search" placeholder="Search position or company..." value={filters.search} onChange={set('search')} />
         <select className="field" value={filters.status} onChange={set('status')}>
           <option value="">All statuses</option>
           {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
@@ -69,7 +69,7 @@ export default function Applications() {
       <div className="split">
         <div className="applist">
           {apps.length === 0 ? (
-            <div className="card muted">No applications match. Add one with “+ New”.</div>
+            <div className="card muted">No applications match. Add one with "+ New".</div>
           ) : apps.map((a) => (
             <button
               key={a.id}

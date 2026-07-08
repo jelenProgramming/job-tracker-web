@@ -19,7 +19,7 @@ export default function App() {
     token.clear(); setUser(null)
   }
 
-  if (booting) return <div className="boot">Loading…</div>
+  if (booting) return <div className="boot">Loading...</div>
   if (!user) return <Auth onAuthed={setUser} />
 
   return (

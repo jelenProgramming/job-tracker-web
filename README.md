@@ -1,4 +1,4 @@
-# Tracklr — Web
+# Tracklr - Web
 
 React + Vite front end for the Tracklr API. A funnel of your pipeline at the
 top, filter by status / company / search, and a detail panel for each

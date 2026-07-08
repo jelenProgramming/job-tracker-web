@@ -70,7 +70,7 @@ export default function ApplicationForm({ onCreated, onCancel }) {
         </label>
       </div>
       <label className="lbl">Job link
-        <input className="field" placeholder="https://…" value={form.link} onChange={set('link')} />
+        <input className="field" placeholder="https://..." value={form.link} onChange={set('link')} />
       </label>
       <label className="lbl">Notes
         <textarea className="field field--area" rows={2} value={form.notes} onChange={set('notes')} />
@@ -78,7 +78,7 @@ export default function ApplicationForm({ onCreated, onCancel }) {
       {error && <div className="form-error">{error}</div>}
       <div className="panel__actions">
         <button type="button" className="btn" onClick={onCancel}>Cancel</button>
-        <button type="submit" className="btn btn--primary" disabled={busy}>{busy ? 'Saving…' : 'Add application'}</button>
+        <button type="submit" className="btn btn--primary" disabled={busy}>{busy ? 'Saving...' : 'Add application'}</button>
       </div>
     </form>
   )

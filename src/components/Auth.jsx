@@ -35,7 +35,7 @@ export default function Auth({ onAuthed }) {
           <input className="field" type="password" placeholder="Password" value={form.password} onChange={set('password')} />
           {error && <div className="auth__error">{error}</div>}
           <button className="auth__btn" type="submit" disabled={busy}>
-            {busy ? 'Please wait…' : mode === 'login' ? 'Log in' : 'Create account'}
+            {busy ? 'Please wait...' : mode === 'login' ? 'Log in' : 'Create account'}
           </button>
         </form>
       </div>

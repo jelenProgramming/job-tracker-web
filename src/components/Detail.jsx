@@ -49,7 +49,7 @@ export default function Detail({ app, onChanged, onDeleted }) {
       <div className="timeline">
         <div className="timeline__label">Activity</div>
         <form className="timeline__add" onSubmit={addNote}>
-          <input className="field" placeholder="Add a note (interview, follow-up…)" value={note} onChange={(e) => setNote(e.target.value)} />
+          <input className="field" placeholder="Add a note (interview, follow-up...)" value={note} onChange={(e) => setNote(e.target.value)} />
           <button className="btn btn--primary" disabled={busy}>Add</button>
         </form>
         <ul className="timeline__list">
