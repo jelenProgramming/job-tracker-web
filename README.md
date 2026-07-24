@@ -17,7 +17,7 @@ Make sure the Laravel API (the `jobtracker` repo) is running.
 ## Deploy to Vercel
 
 Push to GitHub, import on Vercel, framework preset **Vite**. Set `VITE_API_URL`
-to your deployed Railway API URL (no trailing slash).
+to the deployed API's URL (no trailing slash).
 
 ## Notes
 
