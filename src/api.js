@@ -50,6 +50,8 @@ export const api = {
   createApplication: (d) => req('/api/applications', { method: 'POST', body: JSON.stringify(d) }),
   updateStatus: (id, status) => req(`/api/applications/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) }),
   addEvent: (id, note) => req(`/api/applications/${id}/events`, { method: 'POST', body: JSON.stringify({ note }) }),
+  updateEvent: (id, eventId, note) => req(`/api/applications/${id}/events/${eventId}`, { method: 'PATCH', body: JSON.stringify({ note }) }),
+  deleteEvent: (id, eventId) => req(`/api/applications/${id}/events/${eventId}`, { method: 'DELETE' }),
   deleteApplication: (id) => req(`/api/applications/${id}`, { method: 'DELETE' }),
 }
 

@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
 import { api } from '../api'
+import Modal from './Modal'
 
 export default function Companies() {
   const [companies, setCompanies] = useState([])
   const [form, setForm] = useState({ name: '', website: '' })
   const [error, setError] = useState('')
+  const [busy, setBusy] = useState(false)
+  const [deleting, setDeleting] = useState(null)
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value })
 
   const load = () => api.companies().then(setCompanies).catch((e) => setError(e.message))
@@ -16,9 +19,10 @@ export default function Companies() {
     try { await api.createCompany(form); setForm({ name: '', website: '' }); load() }
     catch (err) { setError(err.message) }
   }
-  async function remove(id) {
-    if (!confirm('Delete this company and all its applications?')) return
-    await api.deleteCompany(id); load()
+  async function remove() {
+    setBusy(true)
+    try { await api.deleteCompany(deleting.id); load() }
+    finally { setBusy(false); setDeleting(null) }
   }
 
   return (
@@ -42,12 +46,25 @@ export default function Companies() {
                   <div className="lrow__name">{c.name}</div>
                   <div className="lrow__sub">{c.website || 'no website'} | {c.applications_count} applications</div>
                 </div>
-                <button className="xdel" onClick={() => remove(c.id)}>×</button>
+                <button className="xdel" onClick={() => setDeleting(c)}>x</button>
               </li>
             ))}
           </ul>
         )}
       </div>
+
+      {deleting && (
+        <Modal
+          title="Delete this company?"
+          confirmLabel="Delete"
+          danger
+          busy={busy}
+          onConfirm={remove}
+          onCancel={() => setDeleting(null)}
+        >
+          This removes {deleting.name} and all {deleting.applications_count} of its applications. This can't be undone.
+        </Modal>
+      )}
     </div>
   )
 }

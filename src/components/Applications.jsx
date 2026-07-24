@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { api, STATUSES } from '../api'
 import ApplicationForm from './ApplicationForm'
 import Detail from './Detail'
+
+const SEARCH_DEBOUNCE_MS = 250
 
 function Funnel({ stats }) {
   if (!stats) return null
@@ -22,28 +24,35 @@ export default function Applications() {
   const [companies, setCompanies] = useState([])
   const [stats, setStats] = useState(null)
   const [filters, setFilters] = useState({ status: '', company_id: '', search: '' })
-  const [selected, setSelected] = useState(null)
+  const [selectedId, setSelectedId] = useState(null)
   const [creating, setCreating] = useState(false)
   const [error, setError] = useState('')
+  const debounceRef = useRef(null)
 
-  function loadList() {
+  // Single source of truth: the selected application is always derived from
+  // the current id + the latest apps list, never duplicated into its own state.
+  const selectedApp = apps.find((a) => a.id === selectedId) || null
+
+  function refresh() {
     api.applications(filters).then(setApps).catch((e) => setError(e.message))
     api.stats().then(setStats).catch(() => {})
   }
-  useEffect(loadList, [filters])
+
+  // Status and company are instant selects, so only the free-text search
+  // needs debouncing - debouncing the dropdowns too would make them feel laggy.
+  useEffect(() => {
+    clearTimeout(debounceRef.current)
+    debounceRef.current = setTimeout(refresh, SEARCH_DEBOUNCE_MS)
+    return () => clearTimeout(debounceRef.current)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters.search])
+
+  useEffect(() => {
+    refresh()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters.status, filters.company_id])
+
   useEffect(() => { api.companies().then(setCompanies).catch(() => {}) }, [])
-
-  // keep the selected card's data fresh after changes
-  const selectedApp = apps.find((a) => a.id === selected?.id) || selected
-
-  function afterChange() {
-    api.applications(filters).then((list) => {
-      setApps(list)
-      const updated = list.find((a) => a.id === selected?.id)
-      if (updated) setSelected(updated)
-    })
-    api.stats().then(setStats).catch(() => {})
-  }
 
   const set = (k) => (e) => setFilters({ ...filters, [k]: e.target.value })
 
@@ -61,7 +70,7 @@ export default function Applications() {
           <option value="">All companies</option>
           {companies.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
         </select>
-        <button className="btn btn--primary" onClick={() => { setCreating(true); setSelected(null) }}>+ New</button>
+        <button className="btn btn--primary" onClick={() => { setCreating(true); setSelectedId(null) }}>+ New</button>
       </div>
 
       {error && <div className="form-error">{error}</div>}
@@ -73,8 +82,8 @@ export default function Applications() {
           ) : apps.map((a) => (
             <button
               key={a.id}
-              className={`appcard ${selected?.id === a.id && !creating ? 'appcard--on' : ''}`}
-              onClick={() => { setSelected(a); setCreating(false) }}
+              className={`appcard ${selectedId === a.id && !creating ? 'appcard--on' : ''}`}
+              onClick={() => { setSelectedId(a.id); setCreating(false) }}
             >
               <span className={`appcard__bar status-bg-${a.status}`} />
               <div className="appcard__body">
@@ -88,9 +97,9 @@ export default function Applications() {
 
         <div className="splitright">
           {creating ? (
-            <ApplicationForm onCreated={() => { setCreating(false); loadList() }} onCancel={() => setCreating(false)} />
+            <ApplicationForm onCreated={() => { setCreating(false); refresh() }} onCancel={() => setCreating(false)} />
           ) : selectedApp ? (
-            <Detail app={selectedApp} onChanged={afterChange} onDeleted={() => { setSelected(null); loadList() }} />
+            <Detail app={selectedApp} onChanged={refresh} onDeleted={() => { setSelectedId(null); refresh() }} />
           ) : (
             <div className="panel panel--empty">Pick an application to see details and its timeline.</div>
           )}

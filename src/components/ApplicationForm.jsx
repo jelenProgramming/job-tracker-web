@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 import { api, STATUSES } from '../api'
 
-const today = () => new Date().toISOString().slice(0, 10)
-
 export default function ApplicationForm({ onCreated, onCancel }) {
   const [companies, setCompanies] = useState([])
   const [form, setForm] = useState({
