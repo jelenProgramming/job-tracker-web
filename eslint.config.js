@@ -23,9 +23,14 @@ export default [
     },
     rules: {
       ...js.configs.recommended.rules,
+      // eslint-plugin-react-hooks v5 has no `.configs.flat`; the eslintrc-shaped
+      // preset is safe here because only its `rules` are spread in, never its
+      // `plugins` key. On v7 this would become `configs.flat['recommended-latest']`.
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-      'no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^[A-Z_]' }],
+      // Core no-unused-vars does not count JSX references, so imported
+      // components read as unused. Components are capitalised.
+      'no-unused-vars': ['warn', { varsIgnorePattern: '^[A-Z_]', argsIgnorePattern: '^_' }],
     },
   },
   prettierConfig,

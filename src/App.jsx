@@ -25,7 +25,7 @@ export default function App() {
   return (
     <div className="app">
       <header className="topbar">
-        <div className="topbar__brand"><span className="topbar__mark">T</span><span>Tracklr</span></div>
+        <div className="topbar__brand">JobTrack</div>
         <nav className="tabs">
           <button className={`tab ${tab === 'applications' ? 'tab--on' : ''}`} onClick={() => setTab('applications')}>Applications</button>
           <button className={`tab ${tab === 'companies' ? 'tab--on' : ''}`} onClick={() => setTab('companies')}>Companies</button>

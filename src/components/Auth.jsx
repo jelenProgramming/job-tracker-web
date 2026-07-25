@@ -23,7 +23,7 @@ export default function Auth({ onAuthed }) {
   return (
     <div className="auth">
       <div className="auth__card">
-        <div className="auth__brand"><span className="auth__mark">T</span> Tracklr</div>
+        <div className="auth__brand">JobTrack</div>
         <p className="auth__tag">Every application, one place. No more spreadsheet chaos.</p>
         <div className="auth__switch">
           <button className={mode === 'login' ? 'on' : ''} onClick={() => setMode('login')}>Log in</button>

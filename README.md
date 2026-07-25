@@ -1,6 +1,6 @@
-# Tracklr - Web
+# JobTrack - Web
 
-React + Vite front end for the Tracklr API. A funnel of your pipeline at the
+React + Vite front end for the JobTrack API. A funnel of your pipeline at the
 top, filter by status / company / search, and a detail panel for each
 application with an activity timeline, inline status changes, and notes.
 
@@ -17,7 +17,7 @@ Make sure the Laravel API (the `jobtracker` repo) is running.
 ## Deploy to Vercel
 
 Push to GitHub, import on Vercel, framework preset **Vite**. Set `VITE_API_URL`
-to the deployed API's URL (no trailing slash).
+to your deployed Railway API URL (no trailing slash).
 
 ## Notes
 
